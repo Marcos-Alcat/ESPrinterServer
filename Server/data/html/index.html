@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="scripts/highcharts.js"></script>
+
+</head>
+
+<body>
+    <div class="parent">
+        <div class="div1">
+            <button onclick="logoutButton()">Logout</button>
+            <button onclick="rebootButton()">Reboot</button>
+            <button onclick="sendMoveControl('BTNON', 'true');">ON</button>
+            <button onclick="sendMoveControl('BTNOFF', 'true');">OFF</button>
+        </div>
+
+        <div class="div2">
+            <p>Menu</p>
+            <!-- inicio de botonera de pronterface -->
+            <div id="jogPanel">
+                <svg width="440" height="230">
+          <defs>
+            <filter id="shadow" width="200%" height="200%">
+            <feGaussianBlur in="SourceAlpha"
+              stdDeviation="2"
+              result="out1" />
+            <feOffset in="out1"
+              dx="1" dy="1"
+              result="out2" />
+            <feComposite in="SourceGraphic" in2="out2"
+              operator="over" />
+            </filter>
+          </defs>
+          
+          
+          <g id="Jog"   transform="translate(0,-30)">
+                                  <!-- funcion que cambia de color los botones, parametros: id path, id path, idpath, id path, color  -->
+          <g id="homeall"   transform="translate(10,175)" onmouseup="sendMoveControl('HOMEALL', 'true');" onmouseover="changecolor(ha1,ha2,ha3,ha4,'#bfbbc4');" onmouseout="changecolor(ha1,ha2,ha3,ha4,'#f7f8f8dc');">
+            <circle cx='17' cy='17' r='18' fill='#cccbcb' /> <!-- cx='pos en x' cy='pos en y' r='radio' fill='color, poner color de fondo'-->
+            <path class="bg" id="ha1" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  filter="url(#shadow)"/> <!--se pueden sacar todos los filtros-->
+            <path class="bg" id="ha2" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  opacity='0.7' filter="url(#light)"/>
+            <path class="bg" id="ha3" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)"/>
+            <path class="bg" id="ha4" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)" opacity='0.7' filter="url(#light)"/>
+          </g>
+          
+          <g id="homex"   transform="translate(10,35)" onmouseup="sendMoveControl('HOMEX', 'true');" onmouseover="changecolor(hx1,hx2,hx3,hx4,'#bfbbc4');" onmouseout="changecolor(hx1,hx2,hx3,hx4,'#f7f8f8dc');">
+            <circle cx='17' cy='17' r='18' fill='#cccbcb' />
+            <path class="bg" id="hx1" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  filter="url(#shadow)"/>
+            <path class="bg" id="hx2" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  opacity='0.7' filter="url(#light)"/>
+            <path class="bg" id="hx3" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)"/>
+            <path class="bg" id="hx4" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)" opacity='0.7' filter="url(#light)"/>
+            <text x="17" y="26" class="home">X</text>
+          </g>
+          
+          <g id="homey"   transform="translate(159,35)" onmouseup="sendMoveControl('HOMEY', 'true');" onmouseover="changecolor(hy1,hy2,hy3,hy4,'#bfbbc4');" onmouseout="changecolor(hy1,hy2,hy3,hy4,'#f7f8f8dc');">
+            <circle cx='17' cy='17' r='18' fill='#cccbcb' />
+            <path class="bg" id="hy1" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  filter="url(#shadow)"/>
+            <path class="bg" id="hy2" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  opacity='0.7' filter="url(#light)"/>
+            <path class="bg" id="hy3" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)"/>
+            <path class="bg" id="hy4" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)" opacity='0.7' filter="url(#light)"/>
+            <text x="17" y="26" class="home">Y</text>
+          </g>
+          
+          <g id="homez"   transform="translate(159,175)" onmouseup="sendMoveControl('HOMEZ', 'true');" onmouseover="changecolor(hz1,hz2,hz3,hz4,'#bfbbc4');" onmouseout="changecolor(hz1,hz2,hz3,hz4,'#f7f8f8dc');">
+            <circle cx='17' cy='17' r='18' fill='#cccbcb' />
+            <path class="bg" id="hz1" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  filter="url(#shadow)"/>
+            <path class="bg" id="hz2" d="M1,15 L14,2 L16,1 L18,1 L20,2 L23,5 L23,2 L24,1 L27,1 L28,2 L28,10 L33,15 L30,18 L19,7 L15,7 L4,18 z"  opacity='0.7' filter="url(#light)"/>
+            <path class="bg" id="hz3" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)"/>
+            <path class="bg" id="hz4" d="M6,19 L16,9 L18,9 L28,19 L28,28 L6,28 z"  filter="url(#shadow)" opacity='0.7' filter="url(#light)"/>
+            <text x="17" y="26" class="home">Z</text>
+          </g>
+          
+          <g id="topxy">
+          <path class="bg" d="M48,70 A 74,74 0 0,1 154,70 L126,98 A 35,35 0 0 0 76,98 z" filter="url(#shadow)" />
+          <path class="bg" d="M48,70 A 74,74 0 0,1 154,70 L126,98 A 35,35 0 0 0 76,98 z" opacity='0.7' filter="url(#light)"/>
+          <path onmouseup="sendMoveControl('Y', '50');" onmouseover="settext_x('50',this);" onmouseout="restore_x(this);" class="mskjog" d="M48,70 A 74,74 0 0,1 154,70 L126,98 A 35,35 0 0 0 76,98 z" />
+          <path onmouseup="sendMoveControl('Y', '10');" onmouseover="settext_x('10',this);" onmouseout="restore_x(this);" class="mskjog" d="M55,77 A 64,64 0 0,1 147,77 L126,98 A 35,35 0 0 0 76,98 z" />
+          <path onmouseup="sendMoveControl('Y', '1');" onmouseover="settext_x('1',this);" onmouseout="restore_x(this);" class="mskjog" d="M62,84 A 54,54 0 0,1 140,84 L126,98 A 35,35 0 0 0 76,98 z" />
+          <path onmouseup="sendMoveControl('Y', '0.1');" onmouseover="settext_x('0.1',this);" onmouseout="restore_x(this);" class="mskjog" d="M69,91 A 44,44 0 0,1 133,91 L126,98 A 35,35 0 0 0 76,98 z"/>
+          <path class='sign' d="M101,58 L112,76 L90,76 z" />
+          </g>
+          
+          <g id="rightxy"> 
+          <path class="bg" d="M154,70 A 74,74 0 0,1 154,174 L126,146 A 35,35 0 0 0 126,98 z" filter="url(#shadow)"/>
+          <path class="bg" d="M154,70 A 74,74 0 0,1 154,174 L126,146 A 35,35 0 0 0 126,98 z" opacity=0.7 filter="url(#light)"/>
+          <path onmouseup="sendMoveControl('X', '50');" onmouseover="settext_x('50',this);" onmouseout="restore_x(this);" class="mskjog" d="M154,70 A 74,74 0 0,1 154,174 L126,146 A 35,35 0 0 0 126,98 z"/>
+          <path onmouseup="sendMoveControl('X', '10');" onmouseover="settext_x('10',this);" onmouseout="restore_x(this);" class="mskjog" d="M147,77 A 64,64 0 0,1 147,167 L126,146 A 35,35 0 0 0 126,98 z"/>
+          <path onmouseup="sendMoveControl('X', '1');" onmouseover="settext_x('1',this);" onmouseout="restore_x(this);" class="mskjog" d="M140,84 A 54,54 0 0,1 140,160 L126,146 A 35,35 0 0 0 126,98 z"/>
+          <path onmouseup="sendMoveControl('X', '0.1');" onmouseover="settext_x('0.1',this);" onmouseout="restore_x(this);" class="mskjog" d="M133,91 A 44,44 0 0,1 133,153 L126,146 A 35,35 0 0 0 126,98 z"/>
+          <path class='sign' d="M165,122 L148,112 L148,132 z" />
+          </g>
+          
+          <g id="bottomxy"> 
+          <path class="bg" d="M48,174 A 74,74 0 0,0 154,174 L126,146 A 35,35 0 0 1 76,146 z" filter="url(#shadow)"/>
+          <path class="bg" d="M48,174 A 74,74 0 0,0 154,174 L126,146 A 35,35 0 0 1 76,146 z" opacity='0.7' filter="url(#light)"/>
+          <path onmouseup="sendMoveControl('Y', '-50');" onmouseover="settext_x('-50',this);" onmouseout="restore_x(this);" class="mskjog" d="M48,174 A 74,74 0 0,0 154,174 L126,146 A 35,35 0 0 1 76,146 z" />
+          <path onmouseup="sendMoveControl('Y', '-10');" onmouseover="settext_x('-10',this);" onmouseout="restore_x(this);" class="mskjog" d="M55,167 A 64,64 0 0,0 147,167 L126,146 A 35,35 0 0 1 76,146 z" />
+          <path onmouseup="sendMoveControl('Y', '-1');" onmouseover="settext_x('-1',this);" onmouseout="restore_x(this);" class="mskjog" d="M62,160 A 54,54 0 0,0 140,160 L126,146 A 35,35 0 0 1 76,146 z" />
+          <path onmouseup="sendMoveControl('Y', '-0.1');" onmouseover="settext_x('-0.1',this);" onmouseout="restore_x(this);" class="mskjog" d="M69,153 A 44,44 0 0,0 133,153 L126,146 A 35,35 0 0 1 76,146 z" />
+          <path class='sign' d="M101,186 L112,168 L90,168 z" />
+          </g>
+          
+          <g id="leftxy"> 
+          <path class="bg" d="M48,174 A 74,74 0 0,1 48,70 L76,98 A 35,35 0 0 0 76,146 z" filter="url(#shadow)"/>
+          <path class="bg" d="M48,174 A 74,74 0 0,1 48,70 L76,98 A 35,35 0 0 0 76,146 z" opacity='0.7' filter="url(#light)"/>
+          <path onmouseup="sendMoveControl('X', '-50');" onmouseover="settext_x('-50',this);" onmouseout="restore_x(this);" class="mskjog" d="M48,174 A 74,74 0 0,1 48,70 L76,98 A 35,35 0 0 0 76,146 z" />
+          <path onmouseup="sendMoveControl('X', '-10');" onmouseover="settext_x('-10',this);" onmouseout="restore_x(this);" class="mskjog" d="M55,167 A 64,64 0 0,1 55,77 L76,98 A 35,35 0 0 0 76,146 z" />
+          <path onmouseup="sendMoveControl('X', '-1');" onmouseover="settext_x('-1',this);" onmouseout="restore_x(this);" class="mskjog" d="M62,160 A 54,54 0 0,1 62,84 L76,98 A 35,35 0 0 0 76,146 z" />
+          <path onmouseup="sendMoveControl('X', '-0.1');" onmouseover="settext_x('-0.1',this);" onmouseout="restore_x(this);" class="mskjog" d="M69,153 A 44,44 0 0,1 69,91 L76,98 A 35,35 0 0 0 76,146 z" />
+          <path class='sign' d="M37,122 L54,112 L54,132 z" />
+          </g>
+          
+          <g id=''centerxy>
+          <circle class="bg" cx="101" cy="122" r="34" filter="url(#shadow)"/>
+          <circle class="bg" cx="101" cy="122" r="34" opacity='0.7' filter="url(#light)"/>
+          <text id="centerxytext" class="centerjog" x="101" y="127">X/Y</text>
+          </g>
+          
+          <g id="topz">
+            <path class="bg" d="M214,56 A 74,74 0 0,1 288,56 L268,92 A 35,35 0 0 0 234,92 z" filter="url(#shadow)"/>
+            <path class="bg" d="M214,56 A 74,74 0 0,1 288,56 L268,92 A 35,35 0 0 0 234,92 z" opacity='0.7' filter="url(#light)"/>
+            <path onmouseup="sendMoveControl('Z', '10');" onmouseover="settext_z('10',this);" onmouseout="restore_z(this);" class="mskjog" d="M214,56 A 74,74 0 0,1 288,56 L268,92 A 35,35 0 0 0 234,92 z" />
+            <path onmouseup="sendMoveControl('Z', '1');" onmouseover="settext_z('1',this);" onmouseout="restore_z(this);" class="mskjog" d="M219,65 A 64,64 0 0,1 283,65 L268,92 A 35,35 0 0 0 234,92 z" />
+            <path onmouseup="sendMoveControl('Z', '0.1');" onmouseover="settext_z('0.1',this);" onmouseout="restore_z(this);" class="mskjog" d="M224,74 A 54,54 0 0,1 278,74 L268,92 A 35,35 0 0 0 234,92 z" />
+            <path onmouseup="sendMoveControl('Z', '0.01');" onmouseover="settext_z('0.01',this);" onmouseout="restore_z(this);" class="mskjog" d="M229,83 A 44,44 0 0,1 273,83 L268,92 A 35,35 0 0 0 234,92 z" />
+            <path class='sign' d="M251,58 L262,76 L240,76 z" />
+            </g>
+            
+            <g id="centerz">
+            <circle class="bg" cx="251" cy="122" r="34" filter="url(#shadow)" />
+            <circle class="bg" cx="251" cy="122" r="34" opacity='0.7' filter="url(#light)"/>
+            <text id="centerztext" class="centerjog" x="251" y="127">Z</text>
+            </g>
+            
+            <g id="bottomz">
+            <path class="bg" d="M214,188 A 75,75 0 0,0 288,188 L268,152 A 36,36 0 0 1 234,152 z" filter="url(#shadow)"/>
+            <path class="bg" d="M214,188 A 75,75 0 0,0 288,188 L268,152 A 36,36 0 0 1 234,152 z" opacity='0.7' filter="url(#light)"/>
+            <path onmouseup="sendMoveControl('Z', '-10');" onmouseover="settext_z('-10',this);" onmouseout="restore_z(this);"  class="mskjog" d="M214,188 A 74,74 0 0,0 288,188 L268,152 A 35,35 0 0 1 234,152 z" />
+            <path onmouseup="sendMoveControl('Z', '-1');" onmouseover="settext_z('-1',this);" onmouseout="restore_z(this);"  class="mskjog" d="M219,179 A 64,64 0 0,0 283,179 L268,152 A 35,35 0 0 1 234,152 z" />
+            <path onmouseup="sendMoveControl('Z', '-0.1');" onmouseover="settext_z('-0.1',this);" onmouseout="restore_z(this);"  class="mskjog" d="M224,170 A 54,54 0 0,0 278,170 L268,152 A 35,35 0 0 1 234,152 z" />
+            <path onmouseup="sendMoveControl('Z', '-0.01');" onmouseover="settext_z('-0.01',this);" onmouseout="restore_z(this);"  class="mskjog" d="M229,161 A 44,44 0 0,0 273,161 L268,152 A 35,35 0 0 1 234,152 z" />
+            <path class='sign' d="M251,186 L262,168 L240,168 z"/>
+            </g>
+            
+            <g id="tope">
+            <path class="bg" d="M317,56 A 74,74 0 0,1 391,56 L371,92 A 35,35 0 0 0 337,92 z" filter="url(#shadow)"/>
+            <path class="bg" d="M317,56 A 74,74 0 0,1 391,56 L371,92 A 35,35 0 0 0 337,92 z" opacity='0.7' filter="url(#light)"/>
+            <path onmouseup="alert(25);" onmouseover="settext_e('-100',this);" onmouseout="restore_e(this);" class="mskjog" d="M317,56 A 74,74 0 0,1 391,56 L371,92 A 35,35 0 0 0 337,92 z" />
+            <path onmouseup="alert(26);" onmouseover="settext_e('-50',this);" onmouseout="restore_e(this);" class="mskjog" d="M322,65 A 64,64 0 0,1 385,65 L371,92 A 35,35 0 0 0 337,92 z" />
+            <path onmouseup="alert(27);" onmouseover="settext_e('-10',this);" onmouseout="restore_e(this);" class="mskjog" d="M327,74 A 54,54 0 0,1 381,74 L371,92 A 35,35 0 0 0 337,92 z" />
+            <path onmouseup="alert(28);" onmouseover="settext_e('-1',this);" onmouseout="restore_e(this);" class="mskjog" d="M332,83 A 44,44 0 0,1 376,83 L371,92 A 35,35 0 0 0 337,92 z" />
+            <path class='sign' d="M354,58 L365,76 L343,76 z" />
+            </g>
+            
+            <g id="centerze">
+            <circle class="bg" cx="354" cy="122" r="34" filter="url(#shadow)" />
+            <circle class="bg" cx="354" cy="122" r="34" class="bg" opacity='0.7' filter="url(#light)" />
+            <text id="centeretext" class="centerjog" x="353" y="132" opacity="0"></text>
+            <g id="extruder">
+            <path class='sign' d="M350,108 L360,108 L360,128 L355,136 L350,128 z"/>
+            <path class='sign' d="M335,110 L338,109 L340,111 L341,111 L343,109 L346,110 L346,113 L349,113 L350,116 L348,118 L348,119 L350,121 L349,124 L346,124 L346,127 L343,128 L341,126 L340,126 L338,128 L335,127 L335,124 L332,124 L331,121 L333,119 L333,118 L331,116 L332,113 L335,113 z"/>
+            <circle cx="340.5" cy="118.5" r="3.5" fill="#FFF" />
+            </g>
+            
+            
+            <g id="bottome2">
+            <path class="bg"d="M317,188 A 74,74 0 0,0 354,197 L354,156.5 A 35,35 0 0 1 337,152 z" filter="url(#shadow)"/>
+            <path class="bg" d="M317,188 A 74,74 0 0,0 354,197 L354,156.5 A 35,35 0 0 1 337,152 z"  opacity='0.7' filter="url(#light)" />
+            <path onmouseup="alert(29);" onmouseover="settext_e('100',this);" onmouseout="restore_e(this);" class="mskjog" d="M317,188 A 74,74 0 0,0 354,197 L354,156.5 A 35,35 0 0 1 337,152 z"/>
+            <path onmouseup="alert(30);" onmouseover="settext_e('50',this);" onmouseout="restore_e(this);"  class="mskjog" d="M322,179 A 64,64 0 0,0 354,187 L354,156.5 A 35,35 0 0 1 337,152 z" />
+            <path onmouseup="alert(31);" onmouseover="settext_e('10',this);" onmouseout="restore_e(this);"  class="mskjog" d="M327,170 A 54,54 0 0,0 354,177 L354,156.5 A 35,35 0 0 1 337,152 z" />
+            <path onmouseup="alert(32);" onmouseover="settext_e('1',this);" onmouseout="restore_e(this);"  class="mskjog" d="M332,161 A 44,44 0 0,0 354,167 L354,156.5 A 35,35 0 0 1 337,152 z" />
+            <path class='sign' d="M337,171 L347,174 L339.5,182 z"/>
+            </g>
+            
+            <g id="bottome1">
+            <path class="bg" d="M354,197 A 74,74 0 0,0 391,188 L371,152 A 35,35 0 0 1 354,156.5 z" filter="url(#shadow)"/>
+            <path class="bg" d="M354,197 A 74,74 0 0,0 391,188 L371,152 A 35,35 0 0 1 354,156.5 z" opacity='0.7' filter="url(#light)" />
+            <path onmouseup="alert(33);" onmouseover="settext_e('100',this);" onmouseout="restore_e(this);" class="mskjog" d="M354,197 A 74,74 0 0,0 391,188 L371,152 A 35,35 0 0 1 354,156.5 z"/>
+            <path onmouseup="alert(34);" onmouseover="settext_e('50',this);" onmouseout="restore_e(this);" class="mskjog" d="M354,187 A 64,64 0 0,0 386,179 L371,152 A 35,35 0 0 1 354,156.5 z" />
+            <path onmouseup="alert(35);" onmouseover="settext_e('10',this);" onmouseout="restore_e(this);" class="mskjog" d="M354,177 A 54,54 0 0,0 381,170 L371,152 A 35,35 0 0 1 354,156.5 z" />
+            <path onmouseup="alert(36);" onmouseover="settext_e('1',this);" onmouseout="restore_e(this);" class="mskjog" d="M354,167 A 54,54 0 0,0 376,161 L371,152 A 35,35 0 0 1 354,156.5 z" />
+            <path class='sign' d="M361,170 L372,167 L369.5,178 z"/>
+            <path class='sign' d="M364,180 L375,177 L372,188 z"/>
+            </g>
+          </g>
+          </svg>
+                <p>Firmware: 1.0</p>
+            </div>
+            <!-- fin de botonera de pronterface -->
+            <!-- inicio de SLIDERS -->
+            <div class="container">
+                <div>Beb Temp [&#8451;]:</div>
+                <div class="slider-ui color1">
+                    <input type="range" min="0" max="150" step="1">
+                    <div class="bar">
+                        <span class="min"></span>
+                        <span class="max"></span>
+                    </div>
+                    <div class="track">
+                        <div class="value"></div>
+                    </div>
+                </div>
+
+                <br>
+                <div>Ext Temp [&#8451;]:</div>
+                <div class="slider-ui color2">
+                    <input type="range" min="0" max="300" step="1">
+                    <div class="bar">
+                        <span class="min"></span>
+                        <span class="max"></span>
+                    </div>
+                    <div class="track">
+                        <div class="value"></div>
+                    </div>
+                </div>
+
+                <br>
+                <div>Print Speed [%]:</div>
+                <div class="slider-ui color3">
+                    <input type="range" min="0" max="200" step="1">
+                    <div class="bar">
+                        <span class="min"></span>
+                        <span class="max"></span>
+                    </div>
+                    <div class="track">
+                        <div class="value"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- fin de de SLIDERS -->
+            <h4>Set Temp Ex0 to: <span id="setTempEx0"> Waiting... </span> &#8451;</h4>
+            <h4>Set Temp Bed to: <span id="setTempBed"> Waiting... </span> &#8451;</h4>
+            <h4>Status Reception Comand: <span id="statusComand"> Waiting... </span></h4>
+        </div>
+        <div class="div3">
+            <div id="chart-air" class="container"></div>
+        </div>
+        <div class="div4">
+            <p>
+                <button onclick="listFilesButton()">List Files</button>
+                <button onclick="showUploadButtonFancy()">Upload File</button>
+            </p>
+            <p id="status"></p>
+            <p id="detailsheader"></p>
+            <p id="details"></p>
+        </div>
+        <div class="div5">
+            <h4>Set: <span id="gcode"> Waiting Command... </span> </h4>
+            <input type="text" id="inputgcode" name="fullName" value=" ">
+            <button onclick="sendGCODE()">Send</button>
+        </div>
+        <div class="div6"> </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
